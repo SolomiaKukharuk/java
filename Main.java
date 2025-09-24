@@ -1,81 +1,64 @@
-import java.util.Scanner;
-
+import java.util.*;
 public class Main {
     public static void main(String[] args) {
-        //b01_01();
-        //b01_02(args);
-        //b01_03(args);
-        //b01_04();
-        b01_05(args);
-    }
-    public static void b01_01() {
-        System.out.print("Введіть ім'я: ");
-        Scanner sc = new Scanner(System.in);
-        String name = sc.nextLine().trim();
-        System.out.println("Привіт, " + name + "!");
-
-    }
-    public static void b01_02(String[] args){
-
-        System.out.println("Аргументи у зворотному порядку:");
-        for (int i = args.length - 1; i >= 0; i--) {
-            System.out.println(args[i]);
+        //b02_07();
+        //b02_15();
+        //b02_17g();
         }
-
+    public static void b02_07(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Введіть кількість елементів: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        int sum = 0;
+        System.out.println("Введіть елементи масиву:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+            sum += arr[i];
+        }
+        double avg = (double) sum / n;
+        System.out.println("Дисперсія (відхилення):");
+        for (int i = 0; i < n; i++) {
+            int deviation = (int) Math.abs(arr[i] - avg);
+            System.out.print(deviation + " ");
+        }
     }
-    public static void b01_03(String[] args){
-        long product = 1;
-        for (String arg : args) {
-            try {
-                int num = Integer.parseInt(arg);
-                product *= num;
-            } catch (NumberFormatException e) {
-                System.out.println("Аргумент \"" + arg + "\" не є цілим числом.");
-                return;
+    public static void b02_15(){
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Введіть число: ");
+        short n = sc.nextShort();
+        int zeroBits = 0;
+        for (int i = 0; i < 16; i++) {
+            int bit = (n >> i) & 1;
+            if (bit == 0) {
+                zeroBits++;
             }
         }
 
-        System.out.println("Добуток = " + product);
+        System.out.println("Кількість нульових бітів: " + zeroBits);
+    }
+    public static double sinhSeries(double x, double eps) {
+        double term = x;
+        double sum = 0;
+        int k = 0;
+
+        while (Math.abs(term) > eps) {
+            sum += term;
+            k++;
+            term = term * x * x / ((2 * k) * (2 * k + 1));
+        }
+        return sum;
     }
 
-    public static void b01_04(){
+    public static void b02_17g() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Введіть три цілі числа:");
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-        int c = sc.nextInt();
-        double geometricMean = Math.cbrt((double) a * b * c);
-        System.out.printf("Середнє геометричне = %.4f\n", geometricMean);
+        sc.useLocale(Locale.US);
+        System.out.print("Введіть число: ");
+        double x = sc.nextDouble();
+        double eps = 1e-5;
 
-    }
-    public static void b01_05(String[] args){
-        int N, M;
-
-        if (args.length >= 2) {
-            try {
-                N = Integer.parseInt(args[0]);
-                M = Integer.parseInt(args[1]);
-            } catch (NumberFormatException e) {
-                System.out.println("Аргументи мають бути цілими числами.");
-                return;
-            }
-        } else {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Введіть число N (кількість): ");
-            N = sc.nextInt();
-            System.out.print("Введіть число M (максимум): ");
-            M = sc.nextInt();
-        }
-
-        if (N <= 0 || M <= 0) {
-            System.out.println("Числа N та M мають бути додатні.");
-            return;
-        }
-
-        System.out.println("Випадкові числа:");
-        for (int i = 0; i < N; i++) {
-            int rand = (int) (Math.random() * (M + 1));  // [0; M] включно
-            System.out.println(rand);
-        }
+        double result = sinhSeries(x, eps);
+        System.out.println("sinh(" + x + ") ≈ " + result);
+        System.out.println("Math.sinh(" + x + ") = " + Math.sinh(x));
     }
 }
