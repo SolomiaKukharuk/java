@@ -15,8 +15,6 @@ public class Main {
             return;
         }
 
-        System.out.println("Шукаю файл у: " + new java.io.File(".").getAbsolutePath());
-
         String fileName = String.format("input%02d.txt", fileNumber);
         System.out.println("Читаємо файл: " + fileName);
 
